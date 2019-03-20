@@ -217,6 +217,7 @@ def copy_proto(ctx, descriptor, src):
         inputs = [src],
         outputs = [proto],
         command = "cp %s %s" % (src.path, proto.path),
+        use_default_shell_env = True,
     )
     return proto
 
@@ -236,6 +237,7 @@ def _copy_jar_to_srcjar(ctx, jar):
         inputs = [jar],
         outputs = [srcjar],
         command = "mv %s %s" % (jar.path, srcjar.path),
+        use_default_shell_env = True,
     )
     return srcjar
 
@@ -578,7 +580,8 @@ def proto_compile_impl(ctx):
         command = command,
         inputs = protos + data,
         outputs = outputs + [descriptor] + ctx.outputs.outputs,
-        tools = [protoc] + plugin_tools.values()
+        tools = [protoc] + plugin_tools.values(),
+        use_default_shell_env = True,
     )
 
     ###
